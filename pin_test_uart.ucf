@@ -1,0 +1,46 @@
+
+
+
+
+
+
+
+
+
+
+NET "CLK" LOC = T8;
+NET "Rx"  LOC = C11;
+NET "Tx"  LOC = D12;
+
+
+NET "LED[0]" LOC = P4;
+NET "LED[1]" LOC = N5;
+NET "LED[2]" LOC = P5;
+NET "LED[3]" LOC = M6;
+
+
+NET "SegMents[0]" LOC = C7;
+NET "SegMents[1]" LOC = E6;
+NET "SegMents[2]" LOC = C5;
+NET "SegMents[3]" LOC = F7;
+NET "SegMents[4]" LOC = D6;
+NET "SegMents[5]" LOC = E7;
+NET "SegMents[6]" LOC = D5;
+NET "SegMents[7]" LOC = C6;
+
+
+NET "SegSel[5]" LOC = D9;
+NET "SegSel[4]" LOC = E10;
+NET "SegSel[3]" LOC = F10;
+NET "SegSel[2]" LOC = F9;
+NET "SegSel[1]" LOC = E8;
+NET "SegSel[0]" LOC = D8;
+
+NET "Buz" LOC = J11;
+
+
+
+
+
+
+
