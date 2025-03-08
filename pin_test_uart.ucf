@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 NET "CLK" LOC = T8;
 NET "Rx"  LOC = C11;
 NET "Tx"  LOC = D12;
