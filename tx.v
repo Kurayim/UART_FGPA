@@ -20,67 +20,64 @@ reg [1:0] state = STATE_IDLE;
 reg StartTX = 0;
 
 
-always @(posedge clk_50m) begin
-    if(state == STATE_IDLE  && wr_en == 1'b1)
-        StartTX <= 1;
-	 if(state == STATE_START)
-        StartTX <= 0;
-end
+	always @(posedge clk_50m) begin
+	    if(state == STATE_IDLE  && wr_en == 1'b1)
+	        StartTX <= 1;
+		if(state == STATE_START)
+	        StartTX <= 0;
+	end
 
 
 
-always @(posedge clk_50m) begin
-	case (state)
-        STATE_IDLE: begin
-            tx <= 1'b1;
-            tx_busy <= 0;
-            if (StartTX) begin
-                state <= STATE_START;
-                data <= din;
-                bitpos <= 3'h0;
-                tx_busy <= 1;
-                CounterCLK <= 0;
-            end 
-        end
-        STATE_START: begin			
-            CounterCLK <= CounterCLK + 1'b1;
-            if(CounterCLK > COUNT_CLK)begin
-                tx <= 1'b0;
-                state <= STATE_DATA;
-                CounterCLK <= 0;
-            end
-        end
-        STATE_DATA: begin
-            CounterCLK <= CounterCLK + 1'b1;
-            if(CounterCLK > COUNT_CLK)begin
-                tx <= data[bitpos];
-                if (bitpos == 3'h7)begin
-                    state <= STATE_STOP;
-                end
-                else
-                    bitpos <= bitpos + 3'h1;
-                //tx <= data[bitpos];
-                
-                CounterCLK <= 0;
-            end
-        end
-        STATE_STOP: begin
-            CounterCLK <= CounterCLK + 1'b1;
-            if(CounterCLK > COUNT_CLK)begin
-                tx <= 1'b1;
-                state <= STATE_IDLE;
-                tx_busy <= 0;
-                CounterCLK <= 0;
-            end
-        end
-        default: begin
-            tx <= 1'b1;
-            state <= STATE_IDLE;
-            tx_busy <= 0;
-        end
-	endcase
-end
-
-//assign tx_busy = (state != STATE_IDLE);
+	always @(posedge clk_50m) begin
+		case (state)
+	        STATE_IDLE: begin
+	            tx <= 1'b1;
+	            tx_busy <= 0;
+	            if (StartTX) begin
+	                state <= STATE_START;
+	                data <= din;
+	                bitpos <= 3'h0;
+	                tx_busy <= 1;
+	                CounterCLK <= 0;
+	            end 
+	        end
+	        STATE_START: begin			
+	            CounterCLK <= CounterCLK + 1'b1;
+	            if(CounterCLK > COUNT_CLK)begin
+	                tx <= 1'b0;
+	                state <= STATE_DATA;
+	                CounterCLK <= 0;
+	            end
+	        end
+	        STATE_DATA: begin
+	            CounterCLK <= CounterCLK + 1'b1;
+	            if(CounterCLK > COUNT_CLK)begin
+	                tx <= data[bitpos];
+	                if (bitpos == 3'h7)begin
+	                    state <= STATE_STOP;
+	                end
+	                else
+	                    bitpos <= bitpos + 3'h1;
+	                
+	                CounterCLK <= 0;
+	            end
+	        end
+	        STATE_STOP: begin
+	            CounterCLK <= CounterCLK + 1'b1;
+	            if(CounterCLK > COUNT_CLK)begin
+	                tx <= 1'b1;
+	                state <= STATE_IDLE;
+	                tx_busy <= 0;
+	                CounterCLK <= 0;
+	            end
+	        end
+	        default: begin
+	            tx <= 1'b1;
+	            state <= STATE_IDLE;
+	            tx_busy <= 0;
+	        end
+		endcase
+	end
 
 endmodule
